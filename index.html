@@ -5,944 +5,214 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="GHW Camp">
-<meta name="theme-color" content="#185FA5">
-<title>GHW Golfcamp 2026</title>
+<meta name="theme-color" content="#1F7A4B">
+<title>GHW Prüfung 2026</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;font-size:15px;background:#F2F1EC;color:#1A1916}
-@supports (-webkit-touch-callout: none){html,body{height:-webkit-fill-available}}
-input,select,button,textarea{font-family:inherit;font-size:inherit}
-button{cursor:pointer;border:none;background:none}
-#app{height:100vh;display:flex;flex-direction:column;max-width:480px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(0,0,0,.15)}
-@supports (-webkit-touch-callout: none){#app{height:-webkit-fill-available}}
-.screen{display:none;flex-direction:column;height:100%;min-height:0}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;font-size:15px;background:#F0EDE6;color:#1A1916}
+@supports(-webkit-touch-callout:none){html,body{height:-webkit-fill-available}}
+#app{height:100vh;display:flex;flex-direction:column;max-width:480px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(0,0,0,.12)}
+@supports(-webkit-touch-callout:none){#app{height:-webkit-fill-available}}
+.screen{display:none;flex-direction:column;height:100%}
 .screen.active{display:flex}
-.topbar{background:#fff;border-bottom:1px solid #E8E6DF;padding:14px 16px 10px;display:flex;align-items:center;gap:8px;flex-shrink:0;padding-top:max(14px,env(safe-area-inset-top))}
-.topbar-title{font-size:15px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.back-btn{font-size:22px;color:#888;padding:0 4px}
-.body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch}
-.tab-bar{display:flex;border-top:1px solid #E8E6DF;background:#fff;flex-shrink:0;padding-bottom:max(0px,env(safe-area-inset-bottom));min-height:56px;position:relative;z-index:10}
-.tab{flex:1;padding:10px 4px 8px;text-align:center;font-size:10.5px;color:#999;border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:2px}
-.tab.active{color:#185FA5;font-weight:600}
-.tab-icon{font-size:19px;line-height:1}
-.card{background:#F7F6F0;border-radius:12px;padding:12px 14px}
-.card-white{background:#fff;border:1px solid #E8E6DF;border-radius:12px;padding:12px 14px}
-.lbl{font-size:12px;color:#888;margin-bottom:5px}
-.divider{height:1px;background:#E8E6DF;margin:2px 0}
-input[type=text],input[type=password],input[type=number],input[type=tel],select{width:100%;border:1.5px solid #D8D6CF;border-radius:9px;padding:10px 12px;font-size:15px;background:#fff;color:#1A1916;outline:none;transition:border-color .15s}
-input:focus,select:focus{border-color:#185FA5}
-.field{display:flex;flex-direction:column;gap:5px}
-.btn{width:100%;padding:12px;border-radius:10px;font-size:15px;font-weight:600;text-align:center;transition:opacity .1s}
-.btn:active{opacity:.75}
-.btn-primary{background:#185FA5;color:#fff}
-.btn-green{background:#1E5C0A;color:#fff}
-.btn-gray{background:#F0EDE6;color:#444;font-weight:500}
-.btn-sm{padding:8px 0;font-size:13px;font-weight:500}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
-#s-login{background:linear-gradient(160deg,#0D3D6B 0%,#185FA5 100%)}
-.login-inner{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 22px;gap:18px}
-.login-logo{text-align:center;color:#fff}
-.login-logo h1{font-size:28px;font-weight:700;letter-spacing:-.5px}
-.login-logo p{font-size:13px;opacity:.7}
-.login-card{background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:13px}
-.login-card input,.login-card select{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:#fff}
-.login-card input::placeholder{color:rgba(255,255,255,.6)}
-.login-card .lbl{color:rgba(255,255,255,.8)}
-.login-card select option{background:#185FA5;color:#fff}
-.err-msg{color:#FFB3B3;font-size:13px;text-align:center;display:none}
-.status-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 7px;border-radius:99px;font-weight:500;white-space:nowrap}
-.status-online{background:#DFF0CC;color:#1E5C0A}
-.status-offline{background:#FDECEA;color:#A32D2D}
-.award-row{display:flex;gap:6px}
-.award-btn{flex:1;border-radius:9px;padding:8px 4px;font-size:12px;font-weight:700;border:2px solid;text-align:center;background:transparent}
-.award-btn:active{opacity:.8}
-.award-btn.br{border-color:#CD7F32;color:#7B4500}
-.award-btn.si{border-color:#888;color:#444}
-.award-btn.go{border-color:#C9A227;color:#5A3C00}
-.award-btn.sel-br{background:#FAEEDA;border-color:#CD7F32;color:#7B4500}
-.award-btn.sel-si{background:#F0F0EE;border-color:#555;color:#222}
-.award-btn.sel-go{background:#FFF3CC;border-color:#C9A227;color:#4A3000}
-.kind-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F0EDE6}
-.kind-row:last-child{border:none}
+.topbar{background:#1F7A4B;color:#fff;padding:14px 16px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0;padding-top:max(14px,env(safe-area-inset-top))}
+.topbar-title{font-size:16px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.back-btn{font-size:26px;color:rgba(255,255,255,.85);background:none;border:none;cursor:pointer;padding:0 4px 0 0;line-height:1}
+.sync-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sync-dot.online{background:#7FD67F}
+.sync-dot.offline{background:#FFB347}
+.body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+.grp-card{background:#F7F5EF;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.grp-card:active{border-color:#1F7A4B}
+.grp-num{font-size:22px;font-weight:800;width:44px;text-align:center;flex-shrink:0}
+.grp-info{flex:1;min-width:0}
+.grp-name{font-size:15px;font-weight:600}
+.grp-sub{font-size:12px;color:#777;margin-top:2px}
+.grp-prog{font-size:13px;font-weight:600;flex-shrink:0;text-align:right}
+.grp-prog.done{color:#1F7A4B}
+.grp-prog.partial{color:#C9A227}
+.grp-prog.none{color:#CCC}
+.prog-bar{height:5px;background:#E4E1D9;border-radius:3px;margin-top:6px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;transition:width .3s}
+.kind-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#F7F5EF;border-radius:12px;cursor:pointer;transition:opacity .1s}
+.kind-row:active{opacity:.7}
+.kind-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0}
 .kind-info{flex:1;min-width:0}
-.kind-name{font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.kind-meta{font-size:12px;color:#888;margin-top:1px}
-.timer-display{font-size:50px;font-weight:300;letter-spacing:3px;font-variant-numeric:tabular-nums;text-align:center;padding:8px 0 4px;color:#1A1916}
-.timer-display.urgent{color:#A32D2D}
-.prog-bar{height:6px;background:#E8E6DF;border-radius:3px;overflow:hidden;margin:6px 0 12px}
-.prog-fill{height:100%;border-radius:3px;transition:width 1s linear;background:#185FA5}
-.prog-fill.urgent{background:#A32D2D}
-.matrix-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table.matrix{border-collapse:collapse;font-size:10.5px;white-space:nowrap}
-table.matrix th{padding:4px 5px;text-align:center;color:#888;font-weight:500;border-bottom:1px solid #E8E6DF}
-table.matrix th.nc{text-align:left;min-width:75px;padding-left:2px}
-table.matrix td{padding:4px 5px;text-align:center;border-bottom:1px solid #F5F3ED}
-table.matrix td.nc{text-align:left;font-size:12px}
-table.matrix .grp-hdr td{background:#F7F6F0;font-size:10px;font-weight:600;color:#888;letter-spacing:.5px;text-transform:uppercase;padding:5px 5px 3px}
-.dot{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
-.dot-g{background:#FFF3CC;color:#7B4500;border:2px solid #C9A227}
-.dot-s{background:#F0F0EE;color:#444;border:2px solid #888}
-.dot-b{background:#FAEEDA;color:#7B4500;border:2px solid #CD7F32}
-.dot-e{background:#F5F3ED;border:1.5px dashed #CCC}
-.dot-abs{background:repeating-linear-gradient(45deg,#eee,#eee 3px,#ddd 3px,#ddd 6px);border:1.5px solid #CCC}
-.anw-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F0EDE6}
-.anw-row:last-child{border:none}
-.anw-check{font-size:22px;cursor:pointer;user-select:none;flex-shrink:0}
-.anw-info{flex:1}
-.anw-name{font-size:14px;font-weight:500}
-.anw-sub{font-size:12px;color:#888}
-.q-text{font-size:14px;font-weight:500;line-height:1.5;margin-bottom:12px;color:#1A1916}
-.q-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;border:2px solid #E8E6DF;margin-bottom:7px;cursor:pointer;font-size:13px;line-height:1.45;background:#fff;color:#1A1916}
-.q-opt.sel{border-color:#185FA5;background:#EAF2FB;color:#0A2E52}
-.q-opt.rev-ok{border-color:#1E5C0A;background:#DFF0CC;color:#0F3A06}
-.q-opt.rev-wrong{border-color:#A32D2D;background:#FDECEA;color:#5A0A0A}
-.q-opt.rev-missed{border-color:#1E5C0A;background:#F0F8E8;color:#0F3A06}
-.q-cb{width:18px;height:18px;border-radius:4px;border:2px solid #CCC;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
-.q-cb.sel{background:#185FA5;border-color:#185FA5}
-.q-cb.ok{background:#1E5C0A;border-color:#1E5C0A}
-.q-cb.wrong{background:#A32D2D;border-color:#A32D2D}
-.q-cb.missed{background:#1E5C0A;border-color:#1E5C0A}
-.result-pass{background:#DFF0CC;color:#1E5C0A;border-radius:10px;padding:12px;text-align:center;font-size:15px;font-weight:600}
-.result-fail{background:#FDECEA;color:#A32D2D;border-radius:10px;padding:12px;text-align:center;font-size:15px;font-weight:600}
-.info-section{margin-bottom:12px}
-.info-section .info-title{font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.info-section .info-text{font-size:14px;line-height:1.55;color:#1A1916}
-.bew-row{display:flex;gap:6px;margin-top:8px}
-.bew-box{flex:1;border-radius:8px;padding:8px;text-align:center}
-.bew-box .bew-level{font-size:10px;font-weight:700;margin-bottom:3px}
-.bew-box .bew-val{font-size:12px;line-height:1.3}
-.hint-box{background:#FFF8EE;border-left:3px solid #E8A000;border-radius:0 8px 8px 0;padding:9px 11px;font-size:13px;color:#7B4F00;line-height:1.45;margin-top:6px}
-.next-box{background:#F0F7FF;border:1.5px solid #185FA5;border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px}
-.next-arrow{font-size:20px;color:#185FA5}
-.next-lbl{font-size:11px;color:#888}
-.next-val{font-size:14px;font-weight:600;color:#0A2E52}
-.plan-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #F0EDE6;font-size:13px}
-.plan-row:last-child{border:none}
-.plan-time{min-width:46px;color:#888;font-variant-numeric:tabular-nums;font-size:12px}
-.plan-grp{flex:1}
-.plan-now{background:#185FA5;color:#fff;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:600}
-.plan-break{color:#AAA;font-style:italic}
-.plan-play{color:#1E5C0A;font-weight:500}
-#alert-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;padding:20px}
-#alert-overlay.show{display:flex}
-.alert-box{background:#fff;border-radius:16px;padding:24px;max-width:320px;width:100%;text-align:center}
-.alert-icon{font-size:40px;margin-bottom:8px}
-.alert-title{font-size:18px;font-weight:700;margin-bottom:6px}
-.alert-sub{font-size:14px;color:#666;margin-bottom:18px;line-height:1.45}
-#sync-indicator{position:fixed;top:0;left:50%;transform:translateX(-50%);background:#1E5C0A;color:#fff;font-size:12px;padding:4px 14px;border-radius:0 0 8px 8px;z-index:50;display:none;font-weight:500}
-#sync-indicator.show{display:block}
-.helfer-card{background:#fff;border:1px solid #E8E6DF;border-radius:10px;padding:11px 13px;margin-bottom:8px}
-.helfer-name-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
-.helfer-name{font-size:14px;font-weight:600;flex:1}
-.lizenz-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#E1F5EE;color:#0F6E56}
-.tel-link{font-size:13px;color:#185FA5;text-decoration:none;display:flex;align-items:center;gap:4px}
-.station-assign-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #F0EDE6}
-.station-assign-row:last-child{border:none}
-.station-lbl{flex:1;font-size:13px;font-weight:500}
-.day-pills{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
-.day-pill{flex-shrink:0;padding:7px 14px;border-radius:99px;background:#F0EDE6;color:#666;font-size:13px;font-weight:600;white-space:nowrap}
-.day-pill.active{background:#185FA5;color:#fff}
-.warmup-card{background:#FFF8EE;border:1.5px solid #E8A000;border-radius:12px;padding:14px}
+.kind-name{font-size:14px;font-weight:500}
+.kind-sub{font-size:11px;color:#999;margin-top:1px}
+.kind-badges{display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.mini-badge{width:18px;height:18px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
+.mini-badge.g{background:#FFF3CC;color:#7B4500;border:1.5px solid #C9A227}
+.mini-badge.s{background:#F0F0EE;color:#444;border:1.5px solid #888}
+.mini-badge.b{background:#FAEEDA;color:#7B4500;border:1.5px solid #CD7F32}
+.mini-badge.empty{background:#F0EDE6;border:1.5px dashed #CCC}
+.chevron{color:#BBB;font-size:18px;flex-shrink:0}
+.all-done-tag{background:#E6F5EC;color:#1F7A4B;font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.vorh-card{background:#FFF8E7;border:1.5px solid #F0D060;border-radius:12px;padding:12px 14px}
+.vorh-title{font-size:12px;font-weight:600;color:#7B5800;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
+.vorh-btns{display:flex;gap:8px}
+.vorh-btn{flex:1;padding:9px 6px;border-radius:9px;border:2px solid;font-size:13px;font-weight:700;cursor:pointer;background:transparent;text-align:center;transition:all .1s}
+.vorh-btn:active{transform:scale(.94)}
+.vorh-btn.kein{border-color:#CCC;color:#888}
+.vorh-btn.sel-kein{background:#F0EDE6;border-color:#999;color:#555}
+.vorh-btn.vbr{border-color:#CD7F32;color:#7B4500}
+.vorh-btn.sel-vbr{background:#FAEEDA;border-color:#CD7F32;color:#7B4500}
+.vorh-btn.vsi{border-color:#888;color:#444}
+.vorh-btn.sel-vsi{background:#F0F0EE;border-color:#555;color:#222}
+.disz-row{background:#F7F5EF;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.disz-name{flex:1;font-size:14px;font-weight:500}
+.level-btns{display:flex;gap:6px}
+.lvl-btn{width:50px;height:36px;border-radius:9px;border:2px solid;font-size:12px;font-weight:700;cursor:pointer;transition:all .1s;background:transparent;text-align:center;line-height:1}
+.lvl-btn:active{transform:scale(.94)}
+.lvl-btn.br{border-color:#CD7F32;color:#7B4500}
+.lvl-btn.si{border-color:#888;color:#444}
+.lvl-btn.go{border-color:#C9A227;color:#5A3C00}
+.lvl-btn.sel-br{background:#FAEEDA;border-color:#CD7F32;color:#7B4500}
+.lvl-btn.sel-si{background:#F0F0EE;border-color:#555;color:#222}
+.lvl-btn.sel-go{background:#FFF3CC;border-color:#C9A227;color:#4A3000}
+.save-flash{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1F7A4B;color:#fff;padding:8px 18px;border-radius:99px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap}
+.save-flash.show{opacity:1}
+.section-label{font-size:13px;font-weight:600;color:#555;padding:4px 0 2px}
 </style>
 </head>
 <body>
-
-<div id="sync-indicator">✓ Gespeichert</div>
-<div id="alert-overlay">
-  <div class="alert-box">
-    <div class="alert-icon">⏱</div>
-    <div class="alert-title">Gruppe wechseln!</div>
-    <div class="alert-sub" id="alert-sub"></div>
-    <button class="btn btn-primary" onclick="dismissAlert()">OK · Pause starten</button>
-  </div>
-</div>
-
 <div id="app">
-
-<!-- ══ LOGIN ══ -->
-<div id="s-login" class="screen active">
-  <div class="login-inner">
-    <div class="login-logo">
-      <h1>GHW Camp</h1>
-      <p>Jugendgolfcamp · Juli 2026</p>
+  <div id="s-gruppen" class="screen active">
+    <div class="topbar">
+      <div class="topbar-title">&#9971; GHW Abzeichen-Prüfung 2026</div>
+      <div id="sync1" class="sync-dot offline"></div>
     </div>
-    <div class="login-card">
-      <div class="field">
-        <div class="lbl">Anmelden als</div>
-        <select id="login-rolle" onchange="toggleStationField()">
-          <option value="trainer">Trainer</option>
-          <option value="helfer">Helfer</option>
-        </select>
-      </div>
-      <div class="field" id="block-field" style="display:none">
-        <div class="lbl">Mein Stationsblock heute</div>
-        <select id="login-block">
-          <option value="0">Block 1 · Putten + Up &amp; Down</option>
-          <option value="1">Block 2 · Eisen + Holz</option>
-          <option value="2">Block 3 · Wissen</option>
-          <option value="3">Block 4 · Bunker</option>
-          <option value="4">Block 5 · Annäherung</option>
-          <option value="5">Block 6 · Koordination + Athletik</option>
-          <option value="dreiloch">3-Loch-Gruppe</option>
-        </select>
-      </div>
-      <div class="field">
-        <div class="lbl">Passwort</div>
-        <input type="password" id="login-pw" placeholder="••••••" autocomplete="current-password">
-      </div>
-      <div class="err-msg" id="login-err">Falsches Passwort</div>
-      <button class="btn btn-primary" style="background:rgba(255,255,255,.25);color:#fff;border:1.5px solid rgba(255,255,255,.4)" onclick="doLogin()">Einloggen →</button>
+    <div class="body" id="grp-list"></div>
+  </div>
+  <div id="s-kinder" class="screen">
+    <div class="topbar">
+      <button class="back-btn" onclick="goTo('gruppen')">&#8249;</button>
+      <div class="topbar-title" id="kinder-hdr"></div>
+      <div id="sync2" class="sync-dot offline"></div>
     </div>
-    <div style="text-align:center;color:rgba(255,255,255,.4);font-size:12px" id="conn-status">Verbinde…</div>
+    <div class="body" id="kind-list"></div>
+  </div>
+  <div id="s-disz" class="screen">
+    <div class="topbar">
+      <button class="back-btn" onclick="goTo('kinder')">&#8249;</button>
+      <div class="topbar-title" id="disz-hdr"></div>
+      <div id="sync3" class="sync-dot offline"></div>
+    </div>
+    <div class="body" id="disz-body"></div>
   </div>
 </div>
-
-<!-- ══ TRAINER ══ -->
-<div id="s-trainer" class="screen">
-  <div class="topbar">
-    <div class="topbar-title" id="trainer-title">Trainer-Übersicht</div>
-    <span id="t-online-badge" class="status-badge">…</span>
-    <button class="back-btn" onclick="doLogout()">↩</button>
-  </div>
-  <div class="tab-bar">
-    <button class="tab active" id="ttab-anw" onclick="trainerTab('anw')"><span class="tab-icon">✅</span>Anwesenheit</button>
-    <button class="tab" id="ttab-matrix" onclick="trainerTab('matrix')"><span class="tab-icon">🏅</span>Abzeichen</button>
-    <button class="tab" id="ttab-helfer" onclick="trainerTab('helfer')"><span class="tab-icon">👥</span>Helfer</button>
-    <button class="tab" id="ttab-plan" onclick="trainerTab('plan')"><span class="tab-icon">📋</span>Heute</button>
-  </div>
-  <div id="t-anw" class="body"></div>
-  <div id="t-matrix" class="body" style="display:none"></div>
-  <div id="t-helfer" class="body" style="display:none"></div>
-  <div id="t-plan" class="body" style="display:none"></div>
-</div>
-
-<!-- ══ HELFER ══ -->
-<div id="s-helfer" class="screen">
-  <div class="topbar">
-    <div class="topbar-title" id="h-topbar-title">Timer</div>
-    <span id="h-online-badge" class="status-badge">…</span>
-    <button class="back-btn" onclick="doLogout()">↩</button>
-  </div>
-  <div class="tab-bar">
-    <button class="tab active" id="htab-timer" onclick="helferTab('timer')"><span class="tab-icon">⏱</span>Timer</button>
-    <button class="tab" id="htab-erfassen" onclick="helferTab('erfassen')"><span class="tab-icon">✏️</span>Ergebnis</button>
-    <button class="tab" id="htab-info" onclick="helferTab('info')"><span class="tab-icon">📋</span>Aufgabe</button>
-  </div>
-  <div id="h-timer" class="body">
-    <div class="card" style="text-align:center;padding:16px">
-      <div class="lbl">Aktuelle Gruppe</div>
-      <div style="font-size:17px;font-weight:600;margin:4px 0 10px" id="h-cur-grp">—</div>
-      <div class="timer-display" id="h-timer-disp">25:00</div>
-      <div class="prog-bar"><div class="prog-fill" id="h-prog" style="width:100%"></div></div>
-      <div class="row2">
-        <button class="btn btn-primary btn-sm" id="h-btn-start" onclick="timerToggle()">▶ Start</button>
-        <button class="btn btn-gray btn-sm" onclick="timerReset()">↺ Reset</button>
-      </div>
-    </div>
-    <div class="next-box">
-      <div class="next-arrow">→</div>
-      <div><div class="next-lbl">Nächste Gruppe</div><div class="next-val" id="h-next-grp">—</div></div>
-    </div>
-    <div class="card" style="padding:10px 14px">
-      <div class="lbl">Pause (5 Min)</div>
-      <div style="font-size:26px;font-weight:300;font-variant-numeric:tabular-nums;text-align:center;padding:4px 0 8px" id="h-umzug-disp">05:00</div>
-      <div class="row2">
-        <button class="btn btn-gray btn-sm" id="h-btn-umzug" onclick="umzugToggle()">▶ Start</button>
-        <button class="btn btn-gray btn-sm" onclick="umzugReset()">↺ Reset</button>
-      </div>
-    </div>
-    <button class="btn btn-gray btn-sm" onclick="helferTab('planh')">📋 Tagesplan ansehen</button>
-  </div>
-  <div id="h-erfassen" class="body" style="display:none"></div>
-  <div id="h-info" class="body" style="display:none"></div>
-  <div id="h-planh" class="body" style="display:none"></div>
-</div>
-
-</div><!-- #app -->
-
+<div class="save-flash" id="flash">&#10003; Gespeichert</div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBvsn0FfGn31aGyyRGcM0f2ZtZHTHEucVU",
-  authDomain: "ghw-golfcamp.firebaseapp.com",
-  projectId: "ghw-golfcamp",
-  storageBucket: "ghw-golfcamp.firebasestorage.app",
-  messagingSenderId: "745871614215",
-  appId: "1:745871614215:web:a1ad765da30ef34656e5a2"
-};
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
-
-const TRAINER_PW = "camp2026";
-const HELFER_PW  = "ghw2026";
-const CAMP_ID    = "camp2026_1";
-
-// ── DATEN: ABZEICHENGRUPPE ──
-const GRUPPEN = {
-  j1:{label:"Panther",   emoji:"🐆",g:"m",alter:"5–7",  kinder:["Fritz V.","Ferdinand S.","Anton v.O.","Theodor B.","Max S.","Noah S."]},
-  j2:{label:"Jaguare",   emoji:"🐆",g:"m",alter:"7–9",  kinder:["Henri D.","Aron M.","Ben G.","Claas P.","Linus","Felix S."]},
-  j3:{label:"Pumas",     emoji:"🐆",g:"m",alter:"9–13", kinder:["Jan-Philip K.","Jona H.","Xiaodong Z.","Xiaoxi Z.","Nico K.","Vincent"]},
-  m1:{label:"Löwinnen",  emoji:"🦁",g:"w",alter:"6–8",  kinder:["Josephine G.","Louise S.","Sophie v.B.","Antonia D.","Frida S."]},
-  m2:{label:"Tigerinnen",emoji:"🐅",g:"w",alter:"9",    kinder:["Maia P.","Aletta G.","Lisa V."]},
-  m3:{label:"Gepardinnen",emoji:"🐆",g:"w",alter:"11–12",kinder:["Zoey L.","Anna S.","Henrike P."]}
-};
-const GRP_ORDER = ["j1","j2","j3","m1","m2","m3"];
-
-// 3-Loch-Gruppe (3 Flights statt Disziplin-Rotation)
-const DREILOCH_FLIGHTS = {
-  jf1:{label:"J-Flight 1",emoji:"⛳",kinder:["Jasper H.","Jonte W.","Jonathan C.H."]},
-  jf2:{label:"J-Flight 2",emoji:"⛳",kinder:["Maximilian B.","Karl G.","Killian L."]},
-  mf:{label:"M-Flight",emoji:"⛳",kinder:["Leni H.","Greta Z.","Emma Z."]}
-};
-const DREILOCH_ORDER = ["jf1","jf2","mf"];
-
-// 6 Stationsblöcke (statt 9 Einzelstationen)
-const BLOCKS = [
-  {id:0,name:"Putten + Up & Down",ort:"Putting Green",disz:["Pu","UD"]},
-  {id:1,name:"Eisen + Holz",ort:"Driving Range",disz:["Ei","Ho"]},
-  {id:2,name:"Wissen",ort:"Driving Range",disz:["Wi"]},
-  {id:3,name:"Bunker",ort:"Kurzplatz",disz:["Bu"]},
-  {id:4,name:"Annäherung",ort:"Kurzplatz",disz:["An"]},
-  {id:5,name:"Koordination + Athletik",ort:"Parkplatz / Caddy-Haus",disz:["Ko","At"]},
+import { getFirestore, doc, setDoc, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const fb = initializeApp({apiKey:"AIzaSyBvsn0FfGn31aGyyRGcM0f2ZtZHTHEucVU",authDomain:"ghw-golfcamp.firebaseapp.com",projectId:"ghw-golfcamp",storageBucket:"ghw-golfcamp.firebasestorage.app",messagingSenderId:"745871614215",appId:"1:745871614215:web:a1ad765da30ef34656e5a2"});
+const db = getFirestore(fb);
+enableIndexedDbPersistence(db).catch(()=>{});
+const RESULTS_DOC = doc(db,"camps","camp2026_2","data","pruefung2");
+const GRUPPEN = [
+  {id:"g1",label:"Gruppe 1",kinder:["Raphael Kux","Vincent Hussi","Henri Hille","Aaron Vogt"]},
+  {id:"g2",label:"Gruppe 2",kinder:["Samir-Jan Weimer","Lukas Maximilian Dorß","Gabriel Dettenborn","Carl Block","Anna Ter-Nedden","Isabell Dettenborn"]},
+  {id:"g3",label:"Gruppe 3",kinder:["Alice Hussi","Carlo Schulz","Theo Wöltjen","Nelson Baumgärtner","Lea Hille"]},
+  {id:"g4",label:"Gruppe 4",kinder:["Josephine Greger","Alexander Neubersch","Maximilian Neubersch","Eva Ter-Nedden","Johann Kamerichs"]},
+  {id:"g5",label:"Gruppe 5",kinder:["Lasse Weber","Hauke Weber","Malena Tenhumberg","Luisa Glockemann"]},
+  {id:"g6",label:"Gruppe 6",kinder:["Adrian Woch","Paul Kutzner","Ferdinand Greger"]},
 ];
-const DISZ_KEYS = ["Pu","Ei","Ho","Wi","Ko","At","Bu","An","UD"];
-const DISZ_LABELS = {Pu:"Putten",Ei:"Eisen",Ho:"Holz",Wi:"Wissen",Ko:"Koordination",At:"Athletik",Bu:"Bunker",An:"Annäherung",UD:"Up & Down"};
-
-const CAMP_TAGE = [
-  {id:1, label:"Tag 1 · Mo", typ:"uebung"},
-  {id:2, label:"Tag 2 · Di", typ:"uebung"},
-  {id:3, label:"Tag 3 · Mi", typ:"uebung"},
-  {id:4, label:"Tag 4 · Do", typ:"pruefung"},
-];
-
-const WARMUP_SPIELE = ["Eis ticken","Fischer Fischer, wie tief ist das Wasser?","Ketten ticken","Tic-Tac-Toe Staffellauf"];
-
-// ── STATE ──
-let myRole="", myBlock=0, curSlot=0, curTag=1;
-let timerSec=1500, timerInt=null, timerRunning=false;
-let umzugSec=300, umzugInt=null, umzugRunning=false;
-let results={}, anwesenheit={}, helferListe={}, stationZuweisung={};
-let unsubResults=null, unsubAnw=null, unsubHelfer=null, unsubZuweisung=null;
-let quizState={level:"bronze",qIdx:0,selected:[],revealed:false,score:0};
-let pendingWrites=[];
-let isOnline=navigator.onLine;
-
-window.addEventListener('online',  ()=>{ isOnline=true;  updateOnlineBadge(); flushPending(); });
-window.addEventListener('offline', ()=>{ isOnline=false; updateOnlineBadge(); });
-
-function updateOnlineBadge() {
-  document.querySelectorAll('#t-online-badge,#h-online-badge').forEach(b => {
-    b.className = 'status-badge ' + (isOnline ? 'status-online' : 'status-offline');
-    b.textContent = isOnline ? '● Online' : '○ Offline';
-  });
-}
-async function flushPending() {
-  while(pendingWrites.length > 0) {
-    const {ref, data} = pendingWrites[0];
-    try { await setDoc(ref, data, {merge:true}); pendingWrites.shift(); }
-    catch(e) { break; }
-  }
-}
-async function safeSetDoc(ref, data) {
-  if(isOnline) { try { await setDoc(ref, data, {merge:true}); showSync(); } catch(e) { pendingWrites.push({ref,data}); } }
-  else { pendingWrites.push({ref,data}); }
-}
-function showSync() {
-  const el = document.getElementById('sync-indicator');
-  el.classList.add('show'); setTimeout(()=>el.classList.remove('show'), 1400);
-}
-
-// ── LOGIN ──
-window.toggleStationField = function() {
-  document.getElementById('block-field').style.display =
-    document.getElementById('login-rolle').value==='helfer' ? 'flex' : 'none';
+const GRP_COLORS=["#4CAF8A","#2196C4","#E07B39","#8B5EA4","#C9A227","#C2185B"];
+const DISZ=[{key:"Pu",label:"Putten"},{key:"UD",label:"Up & Down"},{key:"An",label:"Annäherung"},{key:"Bu",label:"Bunker"},{key:"Ei",label:"Eisen"},{key:"Ho",label:"Holz"},{key:"Ko",label:"Koordination"},{key:"At",label:"Athletik"},{key:"Wi",label:"Wissen"}];
+function kindId(g,i){return g+"_"+i;}
+function initials(n){return n.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();}
+let results={},curGrp=null,curKind=null,screen="gruppen";
+window.goTo=function(s,grpId,kindIdx){
+  if(grpId!==undefined)curGrp=GRUPPEN.find(g=>g.id===grpId);
+  if(kindIdx!==undefined)curKind={grp:curGrp,idx:kindIdx,name:curGrp.kinder[kindIdx],id:kindId(curGrp.id,kindIdx)};
+  screen=s;
+  document.querySelectorAll(".screen").forEach(el=>el.classList.remove("active"));
+  document.getElementById("s-"+s).classList.add("active");
+  if(s==="gruppen")renderGruppen();
+  if(s==="kinder")renderKinder();
+  if(s==="disz")renderDisz();
 };
-window.doLogin = function() {
-  const rolle = document.getElementById('login-rolle').value;
-  const pw = document.getElementById('login-pw').value;
-  const err = document.getElementById('login-err');
-  if(pw !== (rolle==='trainer'?TRAINER_PW:HELFER_PW)) { err.style.display='block'; return; }
-  err.style.display='none';
-  myRole = rolle;
-  const blockVal = document.getElementById('login-block').value;
-  myBlock = blockVal === 'dreiloch' ? 'dreiloch' : parseInt(blockVal);
-  if(rolle==='trainer') startTrainer(); else startHelfer();
+function renderGruppen(){
+  document.getElementById("grp-list").innerHTML=GRUPPEN.map((grp,gi)=>{
+    const total=grp.kinder.length*DISZ.length;
+    const done=grp.kinder.reduce((sum,_,i)=>sum+DISZ.filter(d=>(results[kindId(grp.id,i)]||{})[d.key]).length,0);
+    const kindDone=grp.kinder.filter((_,i)=>DISZ.every(d=>(results[kindId(grp.id,i)]||{})[d.key])).length;
+    const pct=total?Math.round(done/total*100):0;
+    const col=GRP_COLORS[gi];
+    return '<div class="grp-card" onclick="goTo(\'kinder\',\''+grp.id+'\')">'
+      +'<div class="grp-num" style="color:'+col+'">'+(gi+1)+'</div>'
+      +'<div class="grp-info"><div class="grp-name">'+grp.label+'</div>'
+      +'<div class="grp-sub">'+grp.kinder.length+' Kinder</div>'
+      +'<div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+col+'"></div></div></div>'
+      +'<div class="grp-prog '+(pct===100?'done':pct>0?'partial':'none')+'">'+kindDone+'/'+grp.kinder.length+'<br><span style="font-size:10px;font-weight:400;color:#AAA">fertig</span></div>'
+      +'</div>';
+  }).join("");
+}
+function renderKinder(){
+  if(!curGrp)return;
+  const gi=GRUPPEN.indexOf(curGrp);const col=GRP_COLORS[gi];
+  document.getElementById("kinder-hdr").textContent=curGrp.label;
+  document.getElementById("kind-list").innerHTML=curGrp.kinder.map((name,i)=>{
+    const r=results[kindId(curGrp.id,i)]||{};
+    const vorh=r._vorh||null;
+    const allDone=DISZ.every(d=>r[d.key]);
+    const doneCount=DISZ.filter(d=>r[d.key]).length;
+    const badges=DISZ.map(d=>{const v=r[d.key];return '<span class="mini-badge '+(v==="g"?"g":v==="s"?"s":v==="b"?"b":"empty")+'">'+(v?v.toUpperCase():"")+"</span>";}).join("");
+    const vorhLabel=vorh==="b"?"&#127951; Bronze":vorh==="s"?"&#127950; Silber":"";
+    const sub=vorhLabel?"Vorhandenes Abzeichen: "+vorhLabel:doneCount>0?doneCount+"/9 eingetragen":"Noch keine Eingaben";
+    return '<div class="kind-row" onclick="goTo(\'disz\',undefined,'+i+')">'
+      +'<div class="kind-avatar" style="background:'+col+'">'+initials(name)+'</div>'
+      +'<div class="kind-info"><div class="kind-name">'+name+'</div><div class="kind-sub">'+sub+'</div></div>'
+      +(allDone?'<span class="all-done-tag">&#10003; Fertig</span>':'<div class="kind-badges">'+badges+'</div>')
+      +'<span class="chevron">&#8250;</span></div>';
+  }).join("");
+}
+function renderDisz(){
+  if(!curKind)return;
+  document.getElementById("disz-hdr").textContent=curKind.name;
+  const r=results[curKind.id]||{};const vorh=r._vorh||null;
+  const done=DISZ.filter(d=>r[d.key]).length;
+  document.getElementById("disz-body").innerHTML=
+    '<div class="vorh-card"><div class="vorh-title">&#11088; Vorhandenes Abzeichen</div><div class="vorh-btns">'
+    +'<button class="vorh-btn kein '+((!vorh)?"sel-kein":"")+'" onclick="setVorh(null)">Keins</button>'
+    +'<button class="vorh-btn vbr '+(vorh==="b"?"sel-vbr":"")+'" onclick="setVorh(\'b\')">&#127951; Bronze</button>'
+    +'<button class="vorh-btn vsi '+(vorh==="s"?"sel-vsi":"")+'" onclick="setVorh(\'s\')">&#127950; Silber</button>'
+    +'</div></div>'
+    +'<div class="section-label">Prüfung · '+done+'/9 eingetragen</div>'
+    +DISZ.map(d=>{const v=r[d.key]||"";
+      return '<div class="disz-row"><div class="disz-name">'+d.label+'</div><div class="level-btns">'
+        +'<button class="lvl-btn br '+(v==="b"?"sel-br":"")+'" onclick="setLevel(\''+d.key+'\',\'b\')">Br</button>'
+        +'<button class="lvl-btn si '+(v==="s"?"sel-si":"")+'" onclick="setLevel(\''+d.key+'\',\'s\')">Si</button>'
+        +'<button class="lvl-btn go '+(v==="g"?"sel-go":"")+'" onclick="setLevel(\''+d.key+'\',\'g\')">Go</button>'
+        +'</div></div>';
+    }).join("");
+}
+window.setVorh=function(level){
+  const id=curKind.id;if(!results[id])results[id]={};
+  if(level===null)delete results[id]._vorh;else results[id]._vorh=level;
+  renderDisz();scheduleSave(id);
 };
-window.doLogout = function() {
-  [unsubResults,unsubAnw,unsubHelfer,unsubZuweisung].forEach(u=>{if(u)u();});
-  unsubResults=unsubAnw=unsubHelfer=unsubZuweisung=null;
-  clearInterval(timerInt); timerRunning=false;
-  clearInterval(umzugInt); umzugRunning=false;
-  document.getElementById('login-pw').value='';
-  goTo('s-login');
+window.setLevel=function(key,level){
+  const id=curKind.id;if(!results[id])results[id]={};
+  results[id][key]=results[id][key]===level?null:level;
+  if(!results[id][key])delete results[id][key];
+  renderDisz();scheduleSave(id);
 };
-
-// ── FIRESTORE SUBSCRIPTIONS ──
-function subscribeResults() {
-  unsubResults = onSnapshot(doc(db,'camps',CAMP_ID,'data','results'), snap=>{
-    results = snap.exists()? snap.data() : {};
-    buildMatrix();
-  }, ()=>{});
+let saveTimers={};
+function scheduleSave(id){
+  clearTimeout(saveTimers[id]);
+  saveTimers[id]=setTimeout(async()=>{
+    try{await setDoc(RESULTS_DOC,{[id]:results[id]||{}},{merge:true});flashSave();}
+    catch(e){console.warn(e);}
+  },600);
 }
-function subscribeAnwesenheit() {
-  unsubAnw = onSnapshot(doc(db,'camps',CAMP_ID,'data','anwesenheit'), snap=>{
-    anwesenheit = snap.exists()? snap.data() : {};
-    buildAnwesenheit();
-    if(myRole==='helfer'){ renderKinder(); updateTimerDisplay(); }
-  }, ()=>{});
-}
-function subscribeHelfer() {
-  unsubHelfer = onSnapshot(doc(db,'camps',CAMP_ID,'data','helfer'), snap=>{
-    helferListe = snap.exists()? snap.data() : {};
-    buildHelferListe();
-  }, ()=>{});
-}
-function subscribeZuweisung() {
-  unsubZuweisung = onSnapshot(doc(db,'camps',CAMP_ID,'data','zuweisung'), snap=>{
-    stationZuweisung = snap.exists()? snap.data() : {};
-    buildStationZuweisung();
-  }, ()=>{});
-}
-
-// ── ANWESENHEIT KEY: tag_gruppenId_kindIdx ──
-function anwKey(gId, idx) { return curTag+'_'+gId+'_'+idx; }
-function isAnwesend(gId, idx) { return !!anwesenheit[anwKey(gId,idx)]; }
-
-// ── TRAINER ──
-function startTrainer() {
-  goTo('s-trainer'); updateOnlineBadge();
-  subscribeResults(); subscribeAnwesenheit(); subscribeHelfer(); subscribeZuweisung();
-  trainerTab('anw');
-}
-window.trainerTab = function(tab) {
-  ['anw','matrix','helfer','plan'].forEach(t => {
-    document.getElementById('t-'+t).style.display = t===tab?'flex':'none';
-    document.getElementById('ttab-'+t).classList.toggle('active', t===tab);
-  });
-};
-
-function dayPillsHtml(onClickFn) {
-  return `<div class="day-pills">${CAMP_TAGE.map(t=>
-    `<button class="day-pill ${t.id===curTag?'active':''}" onclick="${onClickFn}(${t.id})">${t.label}${t.typ==='pruefung'?' 📝':''}</button>`
-  ).join('')}</div>`;
-}
-
-window.setTagAnw = function(tagId) { curTag = tagId; buildAnwesenheit(); };
-window.setTagHelfer = function(tagId) { curTag = tagId; buildStationZuweisung(); };
-
-function buildAnwesenheit() {
-  const el = document.getElementById('t-anw'); el.innerHTML='';
-  const pillWrap = document.createElement('div'); pillWrap.innerHTML = dayPillsHtml('setTagAnw');
-  el.appendChild(pillWrap);
-
-  let total=0, present=0;
-  const abzWrap = document.createElement('div');
-  GRP_ORDER.forEach(gId => {
-    const g = GRUPPEN[gId];
-    const hdr = document.createElement('div');
-    hdr.style.cssText='font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;padding:8px 0 4px;border-bottom:1px solid #E8E6DF';
-    hdr.textContent = g.emoji+' '+g.label+' ('+g.alter+' J.)';
-    abzWrap.appendChild(hdr);
-    g.kinder.forEach((k,i) => {
-      total++; const checked = isAnwesend(gId,i); if(checked) present++;
-      const row = document.createElement('div'); row.className='anw-row';
-      row.innerHTML=`<span class="anw-check" onclick="toggleAnw('${gId}',${i},this)">${checked?'✅':'⬜'}</span>
-        <div class="anw-info"><div class="anw-name">${k}</div><div class="anw-sub">${g.label}</div></div>`;
-      abzWrap.appendChild(row);
-    });
-  });
-  el.appendChild(abzWrap);
-
-  const dlHdr = document.createElement('div');
-  dlHdr.style.cssText='font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;padding:10px 0 4px;border-bottom:1px solid #E8E6DF;margin-top:6px';
-  dlHdr.textContent='⛳ 3-Loch-Gruppe';
-  el.appendChild(dlHdr);
-  DREILOCH_ORDER.forEach(fId => {
-    const f = DREILOCH_FLIGHTS[fId];
-    f.kinder.forEach((k,i) => {
-      total++; const key = 'dl_'+fId+'_'+i; const checked = !!anwesenheit[curTag+'_'+key]; if(checked) present++;
-      const row = document.createElement('div'); row.className='anw-row';
-      row.innerHTML=`<span class="anw-check" onclick="toggleAnwDL('${fId}',${i},this)">${checked?'✅':'⬜'}</span>
-        <div class="anw-info"><div class="anw-name">${k}</div><div class="anw-sub">${f.label}</div></div>`;
-      el.appendChild(row);
-    });
-  });
-
-  const printBtn = document.createElement('button');
-  printBtn.className='btn btn-gray btn-sm'; printBtn.style.marginTop='8px';
-  printBtn.textContent='Drucken / PDF exportieren';
-  printBtn.onclick=()=>alert('Druckansicht…');
-  el.appendChild(printBtn);
-
-  const titleEl = document.querySelector('#trainer-title');
-  if(titleEl) titleEl.textContent = `Trainer · ${present}/${total} anwesend`;
-}
-
-window.toggleAnw = async function(gId, idx, el) {
-  const key = anwKey(gId, idx);
-  anwesenheit[key] = !anwesenheit[key];
-  el.textContent = anwesenheit[key] ? '✅' : '⬜';
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','anwesenheit'), {[key]: anwesenheit[key]});
-  buildAnwesenheit();
-};
-window.toggleAnwDL = async function(fId, idx, el) {
-  const key = curTag+'_dl_'+fId+'_'+idx;
-  anwesenheit[key] = !anwesenheit[key];
-  el.textContent = anwesenheit[key] ? '✅' : '⬜';
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','anwesenheit'), {[key]: anwesenheit[key]});
-  buildAnwesenheit();
-};
-
-function buildMatrix() {
-  const el = document.getElementById('t-matrix'); el.innerHTML='';
-  const wrap = document.createElement('div'); wrap.className='matrix-scroll';
-  let html='<table class="matrix"><tr><th class="nc">Kind</th>'+DISZ_KEYS.map(d=>`<th>${d}</th>`).join('')+'</tr>';
-  GRP_ORDER.forEach(gId => {
-    const g = GRUPPEN[gId];
-    html+=`<tr class="grp-hdr"><td colspan="${DISZ_KEYS.length+1}">${g.emoji} ${g.label}</td></tr>`;
-    g.kinder.forEach((k,i) => {
-      const anwesend = isAnwesend(gId,i);
-      html+='<tr><td class="nc">'+k.split(' ')[0]+(anwesend?'':' <span style="color:#CCC">(abw.)</span>')+'</td>';
-      DISZ_KEYS.forEach(d => {
-        const r = results[gId+'_'+i+'_'+d];
-        const cls = r==='gold'?'dot-g':r==='silver'?'dot-s':r==='bronze'?'dot-b':'dot-e';
-        html+=`<td><span class="dot ${cls}">${r?r[0].toUpperCase():''}</span></td>`;
-      });
-      html+='</tr>';
-    });
-  });
-  html+='</table>';
-  wrap.innerHTML=html; el.appendChild(wrap);
-  const leg=document.createElement('div');
-  leg.style.cssText='display:flex;gap:10px;font-size:11px;color:#888;flex-wrap:wrap;padding-top:4px';
-  leg.innerHTML='<span><span class="dot dot-g">G</span> Gold</span><span><span class="dot dot-s">S</span> Silber</span><span><span class="dot dot-b">B</span> Bronze</span><span><span class="dot dot-e"> </span> offen</span>';
-  el.appendChild(leg);
-}
-
-// ── HELFER-VERWALTUNG (Trainer) ──
-function buildHelferListe() {
-  const el = document.getElementById('t-helfer'); el.innerHTML='';
-  const addCard = document.createElement('div'); addCard.className='card-white';
-  addCard.innerHTML=`<div class="lbl">Neuen Helfer hinzufügen</div>
-    <div class="field" style="margin-bottom:8px"><input type="text" id="new-helfer-name" placeholder="Vollständiger Name"></div>
-    <div class="row2" style="margin-bottom:8px">
-      <div class="field"><input type="tel" id="new-helfer-tel" placeholder="Telefonnummer"></div>
-      <div class="field" style="flex-direction:row;align-items:center;gap:6px;justify-content:center">
-        <input type="checkbox" id="new-helfer-lizenz" style="width:18px;height:18px">
-        <label for="new-helfer-lizenz" style="font-size:13px">C-Lizenz</label>
-      </div>
-    </div>
-    <button class="btn btn-primary btn-sm" onclick="addHelfer()">+ Hinzufügen</button>`;
-  el.appendChild(addCard);
-
-  const listTitle = document.createElement('div'); listTitle.className='lbl'; listTitle.style.marginTop='6px';
-  listTitle.textContent='Helfer-Liste';
-  el.appendChild(listTitle);
-
-  Object.entries(helferListe).forEach(([id,h]) => {
-    if(!h || !h.name) return;
-    const card = document.createElement('div'); card.className='helfer-card';
-    card.innerHTML=`<div class="helfer-name-row">
-        <span class="helfer-name">${h.name}</span>
-        ${h.lizenz?'<span class="lizenz-badge">C-Lizenz</span>':''}
-        <button onclick="removeHelfer('${id}')" style="color:#A32D2D;font-size:18px;padding:0 4px">×</button>
-      </div>
-      ${h.tel?`<a class="tel-link" href="tel:${h.tel}">📞 ${h.tel}</a>`:''}`;
-    el.appendChild(card);
-  });
-}
-window.addHelfer = async function() {
-  const name = document.getElementById('new-helfer-name').value.trim();
-  if(!name) return;
-  const tel = document.getElementById('new-helfer-tel').value.trim();
-  const lizenz = document.getElementById('new-helfer-lizenz').checked;
-  const id = 'h_'+Date.now();
-  helferListe[id] = {name, tel, lizenz};
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','helfer'), {[id]: {name,tel,lizenz}});
-  document.getElementById('new-helfer-name').value='';
-  document.getElementById('new-helfer-tel').value='';
-  document.getElementById('new-helfer-lizenz').checked=false;
-  buildHelferListe();
-};
-window.removeHelfer = async function(id) {
-  delete helferListe[id];
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','helfer'), {[id]: null});
-  buildHelferListe();
-};
-
-// ── TÄGLICHE STATIONSZUWEISUNG (Trainer) ──
-function buildStationZuweisung() {
-  const el = document.getElementById('t-plan'); el.innerHTML='';
-  const pillWrap = document.createElement('div'); pillWrap.innerHTML = dayPillsHtml('setTagHelfer');
-  el.appendChild(pillWrap);
-
-  const warm = document.createElement('div'); warm.className='warmup-card';
-  warm.innerHTML=`<div class="lbl" style="color:#7B4F00">09:00–10:00 · Ankommen + Aufwärmspiele</div>
-    <div style="font-size:13px;line-height:1.6">${WARMUP_SPIELE.map(s=>'• '+s).join('<br>')}</div>`;
-  el.appendChild(warm);
-
-  const card = document.createElement('div'); card.className='card-white';
-  let html = `<div class="lbl" style="margin-bottom:6px">Stationsblöcke · ${CAMP_TAGE.find(t=>t.id===curTag).label}</div>`;
-  const helferNamen = Object.entries(helferListe).filter(([id,h])=>h&&h.name).map(([id,h])=>h.name);
-  BLOCKS.forEach(b => {
-    const key = curTag+'_block'+b.id;
-    const assigned = stationZuweisung[key] || '';
-    html += `<div class="station-assign-row">
-      <span class="station-lbl">${b.name}</span>
-      <select style="width:140px;font-size:12px" onchange="assignHelfer(${b.id},this.value)">
-        <option value="">—</option>
-        ${helferNamen.map(n=>`<option value="${n}" ${assigned===n?'selected':''}>${n}</option>`).join('')}
-      </select>
-    </div>`;
-  });
-  const dlKey = curTag+'_dreiloch';
-  const dlAssigned = (stationZuweisung[dlKey]||'').split(',').filter(Boolean);
-  html += `<div class="station-assign-row" style="border-top:2px solid #E8E6DF;margin-top:4px;padding-top:10px">
-    <span class="station-lbl">⛳ 3-Loch-Gruppe (3 Helfer)</span>
-  </div>`;
-  card.innerHTML = html;
-  el.appendChild(card);
-
-  const dlCard = document.createElement('div'); dlCard.className='card-white';
-  dlCard.innerHTML = `<div class="lbl" style="margin-bottom:6px">3-Loch Helfer (Mehrfachauswahl)</div>
-    ${helferNamen.map(n=>`<label style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px">
-      <input type="checkbox" ${dlAssigned.includes(n)?'checked':''} onchange="toggleDreilochHelfer('${n}',this.checked)"> ${n}
-    </label>`).join('') || '<div style="font-size:12px;color:#888">Noch keine Helfer angelegt</div>'}`;
-  el.appendChild(dlCard);
-}
-window.assignHelfer = async function(blockId, name) {
-  const key = curTag+'_block'+blockId;
-  stationZuweisung[key] = name;
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','zuweisung'), {[key]: name});
-};
-window.toggleDreilochHelfer = async function(name, checked) {
-  const key = curTag+'_dreiloch';
-  let cur = (stationZuweisung[key]||'').split(',').filter(Boolean);
-  if(checked && !cur.includes(name)) cur.push(name);
-  if(!checked) cur = cur.filter(n=>n!==name);
-  stationZuweisung[key] = cur.join(',');
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','zuweisung'), {[key]: cur.join(',')});
-  buildStationZuweisung();
-};
-
-// ── HELFER ──
-function startHelfer() {
-  const title = myBlock==='dreiloch' ? '3-Loch-Gruppe' : 'Block '+(myBlock+1)+' · '+BLOCKS[myBlock].name;
-  document.getElementById('h-topbar-title').textContent = title;
-  goTo('s-helfer'); updateOnlineBadge();
-  subscribeResults(); subscribeAnwesenheit();
-  helferTab('timer');
-  updateTimerDisplay(); buildErfassen(); buildInfoScreen(); buildPlanHelfer();
-}
-window.helferTab = function(tab) {
-  ['timer','erfassen','info','planh'].forEach(t => {
-    const el=document.getElementById('h-'+t); if(el) el.style.display=t===tab?'flex':'none';
-    const btn=document.getElementById('htab-'+t); if(btn) btn.classList.toggle('active',t===tab);
-  });
-};
-
-// ── TIMER mit Anwesenheitsfilter ──
-function activeGroupOrder() {
-  if(myBlock==='dreiloch') return DREILOCH_ORDER.map(id=>({id, ...DREILOCH_FLIGHTS[id], isDL:true}));
-  return GRP_ORDER.map(id=>({id, ...GRUPPEN[id], isDL:false}));
-}
-function groupAtSlot(sl) {
-  const order = activeGroupOrder();
-  const blockNum = myBlock==='dreiloch' ? 0 : myBlock;
-  const g = (blockNum - sl + order.length) % order.length;
-  return order[g] || null;
-}
-function presentCountInGroup(grp) {
-  if(!grp) return 0;
-  let c=0;
-  grp.kinder.forEach((_,i)=>{
-    const key = grp.isDL ? (curTag+'_dl_'+grp.id+'_'+i) : anwKey(grp.id,i);
-    if(anwesenheit[key]) c++;
-  });
-  return c;
-}
-function updateTimerDisplay() {
-  const m=Math.floor(timerSec/60), s=timerSec%60;
-  const d=document.getElementById('h-timer-disp'), f=document.getElementById('h-prog');
-  if(!d) return;
-  const urgent=timerSec>0&&timerSec<=180;
-  d.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-  d.className='timer-display'+(urgent?' urgent':'');
-  f.style.width=Math.round(timerSec/1500*100)+'%'; f.className='prog-fill'+(urgent?' urgent':'');
-  const cur=groupAtSlot(curSlot), nxt=groupAtSlot(curSlot+1);
-  const cg=document.getElementById('h-cur-grp'), ng=document.getElementById('h-next-grp');
-  if(cg) cg.textContent = cur ? `${cur.emoji} ${cur.label} (${presentCountInGroup(cur)} anwesend)` : '— Ende —';
-  if(ng) ng.textContent = nxt ? `${nxt.emoji} ${nxt.label}` : '— Pause / Ende —';
-}
-window.timerToggle = function() {
-  const btn=document.getElementById('h-btn-start');
-  if(timerRunning){clearInterval(timerInt);timerRunning=false;btn.textContent='▶ Weiter';}
-  else{timerInt=setInterval(timerTick,1000);timerRunning=true;btn.textContent='⏸ Pause';}
-};
-window.timerReset = function() {
-  clearInterval(timerInt);timerRunning=false;timerSec=1500;
-  document.getElementById('h-btn-start').textContent='▶ Start'; updateTimerDisplay();
-};
-function timerTick() {
-  if(timerSec<=0){
-    clearInterval(timerInt);timerRunning=false;
-    document.getElementById('h-btn-start').textContent='▶ Start';
-    const nxt=groupAtSlot(curSlot+1);
-    document.getElementById('alert-sub').textContent=nxt?'Nächste Gruppe: '+nxt.emoji+' '+nxt.label:'Alle Gruppen durch.';
-    document.getElementById('alert-overlay').classList.add('show');
-    curSlot++; return;
-  }
-  timerSec--; updateTimerDisplay();
-}
-window.dismissAlert = function(){ document.getElementById('alert-overlay').classList.remove('show'); timerReset(); umzugReset(); };
-window.umzugToggle = function() {
-  const btn=document.getElementById('h-btn-umzug');
-  if(umzugRunning){clearInterval(umzugInt);umzugRunning=false;btn.textContent='▶ Weiter';}
-  else{umzugInt=setInterval(umzugTick,1000);umzugRunning=true;btn.textContent='⏸ Pause';}
-};
-window.umzugReset = function() {
-  clearInterval(umzugInt);umzugRunning=false;umzugSec=300;
-  document.getElementById('h-umzug-disp').textContent='05:00'; document.getElementById('h-btn-umzug').textContent='▶ Start';
-};
-function umzugTick() {
-  if(umzugSec<=0){clearInterval(umzugInt);umzugRunning=false;document.getElementById('h-btn-umzug').textContent='▶ Start';return;}
-  umzugSec--; const m=Math.floor(umzugSec/60),s=umzugSec%60;
-  document.getElementById('h-umzug-disp').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-}
-
-// ── ERGEBNIS ERFASSEN ──
-function buildErfassen() {
-  const el=document.getElementById('h-erfassen'); el.innerHTML='';
-  if(myBlock===2){ buildWissensQuiz(el); return; } // Wissen-Block
-  if(myBlock==='dreiloch'){ buildDreilochErfassen(el); return; }
-
-  const block = BLOCKS[myBlock];
-  const row2=document.createElement('div'); row2.className='row2'; row2.style.marginBottom='0';
-  row2.innerHTML=`<div class="field"><div class="lbl">Gruppe</div>
-    <select id="h-grp-sel" onchange="renderKinder()">${GRP_ORDER.map(g=>`<option value="${g}">${GRUPPEN[g].emoji} ${GRUPPEN[g].label}</option>`).join('')}</select></div>
-    <div class="field"><div class="lbl">Disziplin</div>
-    <select id="h-disz-sel" onchange="renderKinder()">${block.disz.map(d=>`<option value="${d}">${DISZ_LABELS[d]}</option>`).join('')}</select></div>`;
-  el.appendChild(row2);
-  const kindCard=document.createElement('div'); kindCard.className='card-white'; kindCard.style.padding='4px 14px'; kindCard.id='h-kinder-list';
-  el.appendChild(kindCard);
-  const saveBtn=document.createElement('button'); saveBtn.className='btn btn-green'; saveBtn.textContent='✓ Speichern'; saveBtn.onclick=saveErgebnisse;
-  el.appendChild(saveBtn);
-  const msg=document.createElement('div'); msg.id='h-save-msg'; msg.style.cssText='display:none;font-size:13px;color:#1E5C0A;text-align:center;font-weight:500'; msg.textContent='✓ In Firebase gespeichert';
-  el.appendChild(msg);
-  renderKinder();
-}
-
-window.renderKinder = function() {
-  const gId=document.getElementById('h-grp-sel')?.value; if(!gId)return;
-  const dKey=document.getElementById('h-disz-sel')?.value; if(!dKey)return;
-  const g=GRUPPEN[gId];
-  const list=document.getElementById('h-kinder-list'); if(!list)return;
-  list.innerHTML='';
-  g.kinder.forEach((k,i)=>{
-    const anwesend = isAnwesend(gId,i);
-    if(!anwesend){
-      const row=document.createElement('div'); row.className='kind-row'; row.style.opacity='0.4';
-      row.innerHTML=`<div class="kind-info"><div class="kind-name">${k}</div><div class="kind-meta">Abwesend — Tag ${curTag}</div></div>`;
-      list.appendChild(row); return;
-    }
-    const key=gId+'_'+i+'_'+dKey, cur=results[key]||null;
-    const row=document.createElement('div'); row.className='kind-row';
-    row.innerHTML=`<div class="kind-info"><div class="kind-name">${k}</div><div class="kind-meta">${DISZ_LABELS[dKey]}</div></div>
-      <div class="award-row">
-        <button class="award-btn br ${cur==='bronze'?'sel-br':''}" onclick="setResult('${gId}',${i},'${dKey}',this,'bronze')">Br</button>
-        <button class="award-btn si ${cur==='silver'?'sel-si':''}" onclick="setResult('${gId}',${i},'${dKey}',this,'silver')">Si</button>
-        <button class="award-btn go ${cur==='gold'?'sel-go':''}" onclick="setResult('${gId}',${i},'${dKey}',this,'gold')">Go</button>
-      </div>`;
-    list.appendChild(row);
-  });
-};
-window.setResult = function(gId,idx,d,btn,val){
-  const key=gId+'_'+idx+'_'+d;
-  if(results[key]===val) delete results[key]; else results[key]=val;
-  renderKinder();
-};
-window.saveErgebnisse = async function(){
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','results'), {...results, _updated: Date.now()});
-  const msg=document.getElementById('h-save-msg');
-  if(msg){msg.style.display='block';setTimeout(()=>msg.style.display='none',2200);}
-};
-
-// ── 3-LOCH ERFASSEN (Teilnahme statt Bronze/Silber/Gold) ──
-function buildDreilochErfassen(el) {
-  el.innerHTML = `<div class="card-white">
-    <div class="lbl" style="margin-bottom:6px">3-Loch-Gruppe · Spielform heute</div>
-    <select id="dl-modus" style="margin-bottom:10px"><option>Stableford</option><option>Scramble</option><option>Lochspiel</option></select>
-    <div id="dl-flights"></div>
-    <button class="btn btn-green" style="margin-top:10px" onclick="saveDreilochTeilnahme()">✓ Teilnahme speichern</button>
-    <div id="dl-save-msg" style="display:none;font-size:13px;color:#1E5C0A;text-align:center;margin-top:6px;font-weight:500">✓ Gespeichert</div>
-  </div>`;
-  const wrap = document.getElementById('dl-flights');
-  DREILOCH_ORDER.forEach(fId=>{
-    const f = DREILOCH_FLIGHTS[fId];
-    const hdr = document.createElement('div');
-    hdr.style.cssText='font-size:11px;font-weight:700;color:#888;text-transform:uppercase;padding:8px 0 2px';
-    hdr.textContent = f.emoji+' '+f.label;
-    wrap.appendChild(hdr);
-    f.kinder.forEach((k,i)=>{
-      const key = 'dl_'+fId+'_'+i;
-      const anwesend = !!anwesenheit[curTag+'_'+key];
-      const cur = results[key+'_Teilnahme']||null;
-      const row = document.createElement('div'); row.className='kind-row';
-      if(!anwesend){ row.style.opacity='0.4'; row.innerHTML=`<div class="kind-info"><div class="kind-name">${k}</div><div class="kind-meta">Abwesend</div></div>`; wrap.appendChild(row); return; }
-      row.innerHTML=`<div class="kind-info"><div class="kind-name">${k}</div></div>
-        <button class="award-btn go ${cur==='gold'?'sel-go':''}" style="flex:0 0 90px" onclick="setDreilochResult('${fId}',${i},this)">${cur==='gold'?'✓ Teilgenommen':'Teilgenommen'}</button>`;
-      wrap.appendChild(row);
-    });
-  });
-}
-window.setDreilochResult = function(fId,idx,btn){
-  const key='dl_'+fId+'_'+idx+'_Teilnahme';
-  if(results[key]==='gold'){ delete results[key]; btn.classList.remove('sel-go'); btn.textContent='Teilgenommen'; }
-  else { results[key]='gold'; btn.classList.add('sel-go'); btn.textContent='✓ Teilgenommen'; }
-};
-window.saveDreilochTeilnahme = async function(){
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','results'), {...results, _updated: Date.now()});
-  const msg=document.getElementById('dl-save-msg');
-  if(msg){msg.style.display='block';setTimeout(()=>msg.style.display='none',2200);}
-};
-
-// ── WISSENS-QUIZ ──
-const WISSEN={
-  bronze:[
-    {f:"Im Golf spielt Sicherheit eine große Rolle. Welche Grundregeln musst du beachten?",opts:["Ich achte darauf, wohin andere Spieler zielen und bin immer aufmerksam.","Auf der Übungsanlage muss ich die Grundregeln nicht beachten.","Wenn mein Mitspieler schlägt, achte ich darauf, nicht getroffen zu werden.","Wenn mein Mitspieler schlägt, stehe ich ihm gegenüber."],correct:[0,2]},
-    {f:"Was bedeuten rote oder gelbe Pfosten?",opts:["Sie helfen den Greenkeepern.","Sie kennzeichnen eine Penalty Area (z.B. Wasser).","Sie kennzeichnen einen Bunker."],correct:[1]},
-    {f:"Was gibt es im Bunker zu beachten?",opts:["Ich harke den Bunker nachdem ich geschlagen habe und versuche alle Abdrücke zu beseitigen.","Ich harke nur meine eigenen Fußabdrücke."],correct:[0]},
-    {f:"Worauf musst du achten, wenn du mit dem Training fertig bist?",opts:["Ich bringe meinen Ballkorb zurück zur Ballmaschine.","Auf dem Puttinggrün stecke ich die Fähnchen zurück.","Meinen Müll entsorge ich im Mülleimer.","Ich sammle meine Bälle auf der Driving Range ein.","Ich harke den Bunker, wenn ich ihn verlasse."],correct:[0,1,2,4]},
-    {f:"Wenn du einen Probeschwung machst, musst du dich zuerst umsehen, ob deine Mitspieler weit genug entfernt stehen.",opts:["Richtig","Falsch"],correct:[0]},
-  ],
-  silber:[
-    {f:"Was passiert, wenn du nach dem Schlag Rasenstücke herausgeschlagen hast?",opts:["Die Rasenstücke (Divots) muss ich zurücklegen und festtreten.","Ich bekomme einen Strafschlag."],correct:[0]},
-    {f:"Dein Ball ist in einer Penalty Area (Wasser) gelandet. Wie gehst du vor?",opts:["Ich muss die Bahn von vorne spielen.","Ich darf den Ball droppen und mit einem Strafschlag weiterspielen.","Die Bahn ist für mich beendet."],correct:[1]},
-    {f:"Was weißt du über Pitchmarken?",opts:["Pitchmarken sind kleine Dellen auf dem Grün.","Sie entstehen durch Regentropfen.","Bevor ich putte, bessere ich meine Pitchmarken aus.","Eine Pitchgabel sollte ich immer dabei haben."],correct:[0,2,3]},
-    {f:"Wie reagierst du, wenn der Ball deines Mitspielers auf dem Grün im Weg liegt?",opts:["Ich muss drum herumspielen.","Ich lege ihn kurz zur Seite und wieder zurück.","Ich bitte meinen Mitspieler, seinen Ball zu markieren."],correct:[2]},
-    {f:"Was musst du beachten, wenn du deinen Ball eingelocht hast?",opts:["Ich warte, bis alle eingelocht haben.","Ich achte darauf, nicht in die Puttlinie anderer zu treten.","Ich laufe allein weiter zum nächsten Abschlag.","Wir laufen direkt vom Grün, damit die nächste Gruppe spielen kann."],correct:[0,1,3]},
-  ],
-  gold:[
-    {f:"Dein Ball ist im Bunker gelandet. Wie spielst du weiter?",opts:["Ich spiele den Ball wie er liegt — kein Berühren vor dem Schlag.","Ich muss ihn außerhalb droppen.","Ich mache Probeschwünge durch den Sand."],correct:[0]},
-    {f:"In welchen Situationen rufst du laut 'Fore'?",opts:["Wenn mein Ball auf eine andere Bahn fliegt und dort jemand sein könnte.","Wenn ich putte und ein anderer Ball getroffen werden könnte.","Wenn mein Ball auf eine andere Spielergruppe zufliegt."],correct:[0,2]},
-    {f:"Beim Putten trifft dein Ball versehentlich einen anderen Ball auf dem Grün. Was machst du?",opts:["Beide spielen von dort weiter, wo ihre Bälle liegen.","Der getroffene Ball wird zurückgelegt — ich erhalte 2 Strafschläge.","Ich erhalte keine Strafe."],correct:[1]},
-    {f:"Beim Droppen muss ich immer einen Strafschlag hinzurechnen.",opts:["Richtig","Falsch"],correct:[1]},
-    {f:"Was bedeutet 'Ready Golf'?",opts:["Auf dem Grün darf ich putten, auch wenn die Fahne noch im Loch steckt.","Wenn ich keinen anderen gefährde, darf ich spielen, wenn ich bereit bin.","Es schlägt immer der mit dem niedrigsten Handicap ab.","Auf dem Weg zum Ball überlege ich schon, wie ich weiterspiele."],correct:[0,1,3]},
-  ]
-};
-function buildWissensQuiz(el) {
-  quizState={level:"bronze",qIdx:0,selected:[],revealed:false,score:0};
-  el.innerHTML=`<div class="row2">
-    <div class="field"><div class="lbl">Stufe</div><select id="quiz-level" onchange="quizChangeLevel()"><option value="bronze">Bronze</option><option value="silber">Silber</option><option value="gold">Gold</option></select></div>
-    <div class="field"><div class="lbl">Gruppe</div><select id="quiz-grp">${GRP_ORDER.map(g=>`<option value="${g}">${GRUPPEN[g].emoji} ${GRUPPEN[g].label}</option>`).join('')}</select></div>
-  </div><div id="quiz-body"></div>`;
-  renderQuiz();
-}
-window.quizChangeLevel = function(){ quizState.level=document.getElementById('quiz-level').value; quizState.qIdx=0;quizState.selected=[];quizState.revealed=false;quizState.score=0; renderQuiz(); };
-function renderQuiz(){
-  const qs=WISSEN[quizState.level], q=qs[quizState.qIdx];
-  const body=document.getElementById('quiz-body'); if(!body)return;
-  const prog=`<div style="font-size:12px;color:#888;margin-bottom:10px;font-weight:500">Frage ${quizState.qIdx+1} von ${qs.length} · ✓ ${quizState.score} richtig</div>`;
-  const opts=q.opts.map((o,i)=>{
-    const sel=quizState.selected.includes(i), isOk=q.correct.includes(i);
-    let cls='q-opt', cbCls='q-cb';
-    if(quizState.revealed){ if(isOk&&sel){cls+=' rev-ok';cbCls+=' ok';} else if(!isOk&&sel){cls+=' rev-wrong';cbCls+=' wrong';} else if(isOk&&!sel){cls+=' rev-missed';cbCls+=' missed';} }
-    else if(sel){cls+=' sel';cbCls+=' sel';}
-    return `<div class="${cls}" onclick="quizToggle(${i})"><div class="${cbCls}">${(sel||(quizState.revealed&&isOk))?'✓':''}</div><span>${o}</span></div>`;
-  }).join('');
-  const actionBtn=quizState.revealed?`<button class="btn btn-primary" onclick="quizNext()" style="margin-top:4px">Nächste Frage →</button>`:`<button class="btn btn-primary" onclick="quizReveal()" style="margin-top:4px">Auswerten</button>`;
-  body.innerHTML=prog+`<div class="card-white" style="padding:14px"><div class="q-text">${q.f}</div>${opts}</div>${actionBtn}`;
-}
-window.quizToggle=function(i){if(quizState.revealed)return;const idx=quizState.selected.indexOf(i);if(idx>-1)quizState.selected.splice(idx,1);else quizState.selected.push(i);renderQuiz();};
-window.quizReveal=function(){quizState.revealed=true;const q=WISSEN[quizState.level][quizState.qIdx];if(JSON.stringify([...q.correct].sort())===JSON.stringify([...quizState.selected].sort()))quizState.score++;renderQuiz();};
-window.quizNext=function(){const qs=WISSEN[quizState.level];if(quizState.qIdx<qs.length-1){quizState.qIdx++;quizState.selected=[];quizState.revealed=false;renderQuiz();}else{quizFinish();}};
-async function quizFinish(){
-  const passed=quizState.score>=3;
-  const gId=document.getElementById('quiz-grp').value, level=quizState.level;
-  const val=level==='bronze'?'bronze':level==='silber'?'silver':'gold';
-  const body=document.getElementById('quiz-body');
-  body.innerHTML=`<div class="${passed?'result-pass':'result-fail'}">${passed?'✓ Bestanden!':'✗ Nicht bestanden'}<br><span style="font-size:13px;font-weight:400">${quizState.score}/5 richtig · mind. 3 zum Bestehen</span></div>
-  ${passed?`<button class="btn btn-green" style="margin-top:10px" onclick="quizSave('${gId}','${val}')">Ergebnis für ${GRUPPEN[gId].emoji} ${GRUPPEN[gId].label} speichern</button>`:''}
-  <button class="btn btn-gray" style="margin-top:8px" onclick="quizChangeLevel()">Nochmal / andere Stufe</button>`;
-}
-window.quizSave = async function(gId,val){
-  GRUPPEN[gId].kinder.forEach((_,i)=>{ if(isAnwesend(gId,i)) results[gId+'_'+i+'_Wi']=val; });
-  await safeSetDoc(doc(db,'camps',CAMP_ID,'data','results'),{...results,_updated:Date.now()});
-  document.getElementById('quiz-body').innerHTML+='<div style="color:#1E5C0A;text-align:center;font-size:13px;margin-top:8px;font-weight:500">✓ In Firebase gespeichert</div>';
-};
-
-// ── AUFGABE INFO ──
-const AUFGABEN_BY_DISZ = {
-  Pu:{t:"Putten",aufbau:"10 Bälle im Kreis, je ~1m vom Loch.",aufgabe:"Alle 10 Bälle einlochen. Summe der Schläge zählt.",hinweis:"Probeputts erlaubt — nicht direkt vor dem Test komplett durchführen.",bew:[{l:"Gold",v:"10–13 Schläge",bg:"#FFF3CC"},{l:"Silber",v:"14–16 Schläge",bg:"#F0F0EE"},{l:"Bronze",v:"17–20 Schläge",bg:"#FAEEDA"}]},
-  UD:{t:"Up & Down",aufbau:"2 Positionen am Chippinggrün (8–12m), unterschiedlicher Untergrund.",aufgabe:"Je 5 Bälle chippen und einlochen (10 gesamt). Summe der Schläge zählt.",bew:[{l:"Gold",v:"≤ 31 Schläge",bg:"#FFF3CC"},{l:"Silber",v:"32–36 Schläge",bg:"#F0F0EE"},{l:"Bronze",v:"37–42 Schläge",bg:"#FAEEDA"}]},
-  Ei:{t:"Lange Schläge Eisen",aufbau:"Driving Range. Zonen bei 20/35/50/65m, 30m breit.",aufgabe:"10 Bälle. Zone 1=1Pt ... Zone 4=4Pt. Aufkommen (carry) zählt.",bew:[{l:"Gold",v:"≥ 22 Punkte",bg:"#FFF3CC"},{l:"Silber",v:"15–21 Punkte",bg:"#F0F0EE"},{l:"Bronze",v:"8–14 Punkte",bg:"#FAEEDA"}]},
-  Ho:{t:"Lange Schläge Holz",aufbau:"Driving Range. Gleiche Zonen wie Eisen.",aufgabe:"10 Bälle mit Holz. Gleiche Zonenwertung.",bew:[{l:"Gold",v:"≥ 22 Punkte",bg:"#FFF3CC"},{l:"Silber",v:"15–21 Punkte",bg:"#F0F0EE"},{l:"Bronze",v:"8–14 Punkte",bg:"#FAEEDA"}]},
-  Bu:{t:"Bunker",aufbau:"Grünbunker. 15 Bälle. Ziel: Grün treffen.",aufgabe:"Grüntreffer zählen (Endposition des Balls).",hinweis:"Zielfläche mit Hütchen begrenzen wenn nötig.",bew:[{l:"Gold",v:"≥ 8 Treffer",bg:"#FFF3CC"},{l:"Silber",v:"5–7 Treffer",bg:"#F0F0EE"},{l:"Bronze",v:"2–4 Treffer",bg:"#FAEEDA"}]},
-  An:{t:"Annäherung",aufbau:"3 Startpositionen (20–40m). Zielzone Ø 2m.",aufgabe:"Je 2 Bälle pro Position (6 Bälle). In Zielzone spielen — nicht einlochen.",bew:[{l:"Gold",v:"≤ 18 Schläge",bg:"#FFF3CC"},{l:"Silber",v:"19–24 Schläge",bg:"#F0F0EE"},{l:"Bronze",v:"25–30 Schläge",bg:"#FAEEDA"}]},
-  Ko:{t:"Koordination",aufbau:"3 Tests: Zielscheibe · Pelikan · Koordinationslauf. Je 1–3 Punkte.",aufgabe:"Alle 3 Tests, Punkte addieren (max. 9).",bew:[{l:"Gold",v:"7–9 Punkte",bg:"#FFF3CC"},{l:"Silber",v:"4–6 Punkte",bg:"#F0F0EE"},{l:"Bronze",v:"2–3 Punkte",bg:"#FAEEDA"}]},
-  At:{t:"Athletik",aufbau:"6 Tests im Zirkel: Liegestütze · 6-Min-Lauf · Standweitsprung · Sit-Ups · Seitl. Springen · Rumpfbeuge.",aufgabe:"Punkte nach Alter + Geschlecht. Summe max. 18.",bew:[{l:"Gold",v:"12–18 Punkte",bg:"#FFF3CC"},{l:"Silber",v:"9–11 Punkte",bg:"#F0F0EE"},{l:"Bronze",v:"6–8 Punkte",bg:"#FAEEDA"}]},
-  Wi:{t:"Wissen",aufbau:"45 Fragen in 3 Stufen. Test: 5 Fragen, mind. 3/5 = bestanden.",aufgabe:"Reihenfolge: Bronze → Silber → Gold.",hinweis:"3 Testbögen (A/B/C) pro Stufe.",bew:[{l:"Bronze",v:"Sicherheit",bg:"#FAEEDA"},{l:"Silber",v:"Spielpraxis",bg:"#F0F0EE"},{l:"Gold",v:"Turniere",bg:"#FFF3CC"}]},
-};
-function buildInfoScreen(){
-  const el=document.getElementById('h-info');
-  if(myBlock==='dreiloch'){
-    el.innerHTML=`<div class="card-white" style="padding:16px">
-      <div style="font-size:17px;font-weight:700;margin-bottom:14px">3-Loch-Gruppe</div>
-      <div class="info-section"><div class="info-title">Format</div><div class="info-text">3 Löcher auf dem Kurzplatz. Vierer-Format mit Zweierteams (abwechselnd schlagen oder Scramble).</div></div>
-      <div class="info-section"><div class="info-title">Wertung</div><div class="info-text">Teilgenommen = Gold. Keine separate Bronze/Silber-Bewertung.</div></div>
-    </div>`;
-    return;
-  }
-  const block = BLOCKS[myBlock];
-  let html = `<div class="card-white" style="padding:16px"><div style="font-size:17px;font-weight:700;margin-bottom:14px">${block.name}</div>`;
-  block.disz.forEach(d=>{
-    const a = AUFGABEN_BY_DISZ[d]; if(!a) return;
-    html += `<div class="info-section" style="border-top:1px solid #F0EDE6;padding-top:10px;margin-top:6px">
-      <div style="font-size:14px;font-weight:600;margin-bottom:6px">${a.t}</div>
-      ${a.aufbau?`<div class="info-text" style="margin-bottom:4px"><strong>Aufbau:</strong> ${a.aufbau}</div>`:''}
-      <div class="info-text" style="margin-bottom:4px"><strong>Aufgabe:</strong> ${a.aufgabe}</div>
-      ${a.hinweis?`<div class="hint-box">${a.hinweis}</div>`:''}
-      <div class="bew-row">${a.bew.map(b=>`<div class="bew-box" style="background:${b.bg}"><div class="bew-level">${b.l.toUpperCase()}</div><div class="bew-val">${b.v}</div></div>`).join('')}</div>
-    </div>`;
-  });
-  html += `</div><div style="text-align:center;color:#888;font-size:13px">📍 ${block.ort}</div>`;
-  el.innerHTML = html;
-}
-
-function buildPlanHelfer(){
-  const el=document.getElementById('h-planh'); el.innerHTML='';
-  const warm = document.createElement('div'); warm.className='warmup-card';
-  warm.innerHTML=`<div class="lbl" style="color:#7B4F00">09:00–10:00 · Aufwärmphase</div><div style="font-size:13px">${WARMUP_SPIELE.join(' · ')}</div>`;
-  el.appendChild(warm);
-  const card=document.createElement('div'); card.className='card';
-  let html='<div class="lbl" style="margin-bottom:8px">Heutige Rotation</div>';
-  if(myBlock==='dreiloch'){
-    html += `<div class="plan-row"><span class="plan-time">10:00</span><span class="plan-play">3-Loch-Gruppe · 3 Löcher Kurzplatz</span></div>
-      <div class="plan-row"><span class="plan-time">12:00</span><span class="plan-break">Mittagspause</span></div>
-      <div class="plan-row"><span class="plan-time">13:00</span><span class="plan-play">3-Loch-Gruppe · weiter</span></div>`;
-  } else {
-    const slots=['10:00','10:30','11:00','11:30','13:00','13:30'];
-    slots.forEach((t,sl)=>{
-      const g=groupAtSlot(sl);
-      if(sl===4) html+=`<div class="plan-row"><span class="plan-time">12:00</span><span class="plan-break">Mittagspause</span></div>`;
-      html+=`<div class="plan-row"><span class="plan-time">${t}</span><span class="plan-grp">${g?g.emoji+' '+g.label:'—'}</span>${sl===curSlot?'<span class="plan-now">jetzt</span>':''}</div>`;
-    });
-  }
-  card.innerHTML=html; el.appendChild(card);
-  const back=document.createElement('button'); back.className='btn btn-gray btn-sm'; back.textContent='← Zurück zum Timer'; back.onclick=()=>helferTab('timer');
-  el.appendChild(back);
-}
-
-function goTo(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-
-document.getElementById('conn-status').textContent = navigator.onLine ? '✓ Verbunden' : 'Offline — wird synchronisiert sobald online';
-updateOnlineBadge();
-if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{});}
+function flashSave(){const el=document.getElementById("flash");el.classList.add("show");setTimeout(()=>el.classList.remove("show"),1200);}
+function setSyncStatus(on){document.querySelectorAll(".sync-dot").forEach(el=>{el.classList.toggle("online",on);el.classList.toggle("offline",!on);});}
+onSnapshot(RESULTS_DOC,snap=>{setSyncStatus(true);if(snap.exists())Object.assign(results,snap.data());if(screen==="gruppen")renderGruppen();if(screen==="kinder")renderKinder();if(screen==="disz")renderDisz();},()=>setSyncStatus(false));
+window.addEventListener("online",()=>setSyncStatus(true));
+window.addEventListener("offline",()=>setSyncStatus(false));
+renderGruppen();
 </script>
 </body>
 </html>
